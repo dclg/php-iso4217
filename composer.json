@@ -1,0 +1,16 @@
+{
+    "name": "dclg/php-iso4217",
+    "description": "PHP Library provides simple way to operate currency list specified by ISO-4217.",
+    "keywords": ["currency", "ISO 4217"],
+    "homepage": "https://github.com/dclg/php-iso4217",
+    "license": "MIT",
+    "autoload": {
+        "psr-0": {
+            "Dclg\\CurrencyIso": "src/"
+        }
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}
