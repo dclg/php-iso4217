@@ -29,4 +29,15 @@ class CurrencyRepositoryProviderTest extends \PHPUnit_Framework_TestCase
             [CurrencyRepositoryProvider::NUMERIC_KEY, 840]
         ];
     }
+
+    public function testServiceProviderDefault()
+    {
+        $serviceProvider = new CurrencyRepositoryProvider();
+
+        /** @var \Dclg\CurrencyIso\Repository\CurrencyRepository $repository */
+        $repository = $serviceProvider();
+
+        $this->assertEquals(new Currency(840, 'USD', 'US Dollar', 2), $repository->getById(840));
+    }
+
 }

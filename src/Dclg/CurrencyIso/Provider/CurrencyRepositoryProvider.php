@@ -30,11 +30,11 @@ class CurrencyRepositoryProvider
      */
     public function __invoke()
     {
-        $dataPath = __DIR__ . str_repeat(DIRECTORY_SEPARATOR . '..', 4)
-                  . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR;
+        $dataPath = __DIR__ . str_repeat(DIRECTORY_SEPARATOR . '..', 4) . DIRECTORY_SEPARATOR . 'data'
+            . DIRECTORY_SEPARATOR . $this->currentKeyType . '.php';
 
         return new CurrencyRepository(
-            new RequireFileLoader($dataPath . $this->currentKeyType . '.php'),
+            new RequireFileLoader($dataPath),
             new CurrencyArrayEncoder()
         );
     }
