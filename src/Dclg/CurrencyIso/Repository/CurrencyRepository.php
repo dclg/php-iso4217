@@ -29,7 +29,7 @@ class CurrencyRepository
             $this->dataIsLoaded = true;
         }
 
-        if (isset($this->data[$id])) {
+        if (!isset($this->data[$id])) {
             throw new NotFoundException("Data for key $id not found");
         }
 
