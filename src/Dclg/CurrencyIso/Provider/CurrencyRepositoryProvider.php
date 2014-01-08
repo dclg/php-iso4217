@@ -7,17 +7,26 @@ use Dclg\CurrencyIso\RequireFileLoader;
 /**
  * Class CurrencyRepositoryProvider
  *
- * Standard invokable service provider you can implement your own, but what for?
+ * Service provider you can implement your own, but what for?
  */
 class CurrencyRepositoryProvider
 {
-    public function __invoke()
+    public function createAlphaRepository()
     {
         $dataPath = __DIR__ . '/../../../data';
 
         return new CurrencyRepository(
             new RequireFileLoader($dataPath . 'currencyByAlpha.php'),
-            new RequireFileLoader($dataPath . 'currencyByAlpha.php'),
+            new CurrencyArrayEncoder()
+        );
+    }
+
+    public function createNumericRepository()
+    {
+        $dataPath = __DIR__ . '/../../../data';
+
+        return new CurrencyRepository(
+            new RequireFileLoader($dataPath . 'currencyByNumeric.php'),
             new CurrencyArrayEncoder()
         );
     }

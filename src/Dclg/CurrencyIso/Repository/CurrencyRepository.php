@@ -10,47 +10,30 @@ use Dclg\CurrencyIso\LoaderInterface;
  */
 class CurrencyRepository
 {
-    protected $dataByNumeric;
-    protected $dataByAlpha;
+    protected $data;
+    protected $dataIsLoaded = false;
 
-    protected $byNumericLoader;
-    protected $byAlphaLoader;
-
+    protected $dataLoader;
     protected $arrayDecoder;
 
-    public function __construct(LoaderInterface $byAlphaLoader, LoaderInterface $byNumericLoader, CurrencyArrayEncoder $arrayEncoder)
+    public function __construct(LoaderInterface $dataLoader, CurrencyArrayEncoder $arrayEncoder)
     {
-        $this->byAlphaLoader = $byAlphaLoader;
-        $this->byNumericLoader = $byNumericLoader;
+        $this->dataLoader = $dataLoader;
         $this->arrayDecoder = $arrayEncoder;
     }
 
-
-    public function getByNumericId($id)
+    public function getById($id)
     {
-        if (is_null($this->dataByNumeric)) {
-            $this->dataByNumeric = $this->byNumericLoader->load();
+        if (!$this->dataIsLoaded) {
+            $this->data = $this->dataLoader->load();
+            $this->dataIsLoaded = true;
         }
 
-        if (isset($this->dataByNumeric[$id])) {
-            throw new NotFoundException("Data for numeric key $id not found");
+        if (isset($this->data[$id])) {
+            throw new NotFoundException("Data for key $id not found");
         }
 
-        return $this->arrayDecoder->fromArray($this->dataByNumeric[$id]);
-    }
-
-
-    public function getByAlphaId($id)
-    {
-        if (is_null($this->dataByAlpha)) {
-            $this->dataByAlpha = $this->byAlphaLoader->load();
-        }
-
-        if (isset($this->dataByAlpha[$id])) {
-            throw new NotFoundException("Data for alpha key $id not found");
-        }
-
-        return $this->arrayDecoder->fromArray($this->dataByAlpha[$id]);
+        return $this->arrayDecoder->fromArray($this->data[$id]);
     }
 
 }
