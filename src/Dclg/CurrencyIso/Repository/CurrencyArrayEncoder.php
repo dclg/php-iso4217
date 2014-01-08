@@ -36,7 +36,7 @@ class CurrencyArrayEncoder
             }
         }
 
-        if ($array[0] < 0 || $array[0] > 1000) {
+        if ($array[0] < 0 || $array[0] >= 1000) {
             throw new \RuntimeException("Array element with index 0 is out of bounds: should be 0...999");
         }
 
@@ -44,7 +44,7 @@ class CurrencyArrayEncoder
             throw new \RuntimeException("Array element with index 3 is out of bounds: should be positive");
         }
 
-        if (!preg_match('/[A-Z]{3}/', $array[1])) {
+        if (!preg_match('/^[A-Z]{3}$/', $array[1])) {
             throw new \RuntimeException("Array element with index 1 should be three-letter latin upper case code");
         }
     }

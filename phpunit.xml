@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+        bootstrap="test/bootstrap.php"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true">
+
+    <testsuites>
+        <testsuite name="php-iso4217 tests">
+            <directory>test/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/</directory>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-html" target="report/phpunit" title="php-iso4217 tests"
+             charset="UTF-8" yui="true" highlight="true"
+             lowUpperBound="35" highLowerBound="70" />
+    </logging>
+</phpunit>

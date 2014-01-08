@@ -22,24 +22,14 @@ class Currency
 
     public function __construct($numericKey, $alphaKey, $enName, $minorUnitExponent = 0)
     {
-        $this->numericKey = $numericKey;
+        $this->numericKey = (int)$numericKey;
         $this->alphaKey = $alphaKey;
         $this->name = $enName;
-        $this->minorUnitExponent = $minorUnitExponent;
+        $this->minorUnitExponent = (int)$minorUnitExponent;
     }
 
     /**
-     * @param mixed $numericKey
-     * @return $this
-     */
-    public function setNumericKey($numericKey)
-    {
-        $this->numericKey = $numericKey;
-        return $this;
-    }
-
-    /**
-     * @return mixed
+     * @return int
      */
     public function getNumericKey()
     {
@@ -47,17 +37,7 @@ class Currency
     }
 
     /**
-     * @param mixed $alphaKey
-     * @return $this
-     */
-    public function setAlphaKey($alphaKey)
-    {
-        $this->alphaKey = $alphaKey;
-        return $this;
-    }
-
-    /**
-     * @return mixed
+     * @return string
      */
     public function getAlphaKey()
     {
@@ -65,31 +45,11 @@ class Currency
     }
 
     /**
-     * @param mixed $enName
-     * @return $this
-     */
-    public function setName($enName)
-    {
-        $this->name = $enName;
-        return $this;
-    }
-
-    /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param int $minorUnitExponent
-     * @return $this
-     */
-    public function setMinorUnitExponent($minorUnitExponent)
-    {
-        $this->minorUnitExponent = $minorUnitExponent;
-        return $this;
     }
 
     /**
