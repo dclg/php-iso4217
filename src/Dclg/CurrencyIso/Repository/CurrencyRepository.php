@@ -24,10 +24,7 @@ class CurrencyRepository
 
     public function getById($id)
     {
-        if (!$this->dataIsLoaded) {
-            $this->data = $this->dataLoader->load();
-            $this->dataIsLoaded = true;
-        }
+        $this->checkDataIsLoaded();
 
         if (!isset($this->data[$id])) {
             throw new NotFoundException("Data for key $id not found");
@@ -36,4 +33,22 @@ class CurrencyRepository
         return $this->arrayDecoder->fromArray($this->data[$id]);
     }
 
+    public function getAll()
+    {
+        $this->checkDataIsLoaded();
+
+        $result = [];
+        foreach($this->data as $array) {
+            $result[] = $this->arrayDecoder->fromArray($array);
+        }
+        return $result;
+    }
+
+    protected function checkDataIsLoaded()
+    {
+        if (!$this->dataIsLoaded) {
+            $this->data = $this->dataLoader->load();
+            $this->dataIsLoaded = true;
+        }
+    }
 }

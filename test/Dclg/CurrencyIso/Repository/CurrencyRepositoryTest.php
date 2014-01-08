@@ -10,21 +10,7 @@ class CurrencyRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetById()
     {
-        $encoder = new CurrencyArrayEncoder();
-        $loader = $this->getMock('Dclg\CurrencyIso\LoaderInterface', ['load']);
-        $loader
-            ->expects($this->once())
-            ->method('load')
-            ->will(
-                $this->returnValue(
-                    [
-                        'USD' => [840, 'USD', 'US Dollar', 2],
-                        'EUR' => [978, 'EUR', 'Euro', 2],
-                    ]
-                )
-            );
-
-        $repository = new CurrencyRepository($loader, $encoder);
+        $repository = $this->getRepository();
 
         $this->assertEquals(new Currency(840, 'USD', 'US Dollar', 2), $repository->getById('USD'));
         $this->assertEquals(new Currency(978, 'EUR', 'Euro', 2), $repository->getById('EUR'));
@@ -34,6 +20,24 @@ class CurrencyRepositoryTest extends \PHPUnit_Framework_TestCase
      * @expectedException \Dclg\CurrencyIso\Exception\NotFoundException
      */
     public function testGetByIdException()
+    {
+        $repository = $this->getRepository();
+
+        $repository->getById('JPY');
+    }
+
+    public function testGetAll()
+    {
+        $repository = $this->getRepository();
+
+        $this->assertEquals([new Currency(840, 'USD', 'US Dollar', 2), new Currency(978, 'EUR', 'Euro', 2)], $repository->getAll());
+
+    }
+
+    /**
+     * @return CurrencyRepository
+     */
+    protected function getRepository()
     {
         $encoder = new CurrencyArrayEncoder();
         $loader = $this->getMock('Dclg\CurrencyIso\LoaderInterface', ['load']);
@@ -50,8 +54,6 @@ class CurrencyRepositoryTest extends \PHPUnit_Framework_TestCase
             );
 
         $repository = new CurrencyRepository($loader, $encoder);
-        $repository->getById('JPY');
-
+        return $repository;
     }
-
-} 
+}
