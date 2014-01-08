@@ -1,4 +1,5 @@
 <?php
+namespace Dclg\CurrencyIso\Provider;
 
 use Dclg\CurrencyIso\Repository\CurrencyArrayEncoder;
 use Dclg\CurrencyIso\Repository\CurrencyRepository;
@@ -7,26 +8,33 @@ use Dclg\CurrencyIso\RequireFileLoader;
 /**
  * Class CurrencyRepositoryProvider
  *
- * Service provider you can implement your own, but what for?
+ * Invokable service provider
  */
 class CurrencyRepositoryProvider
 {
-    public function createAlphaRepository()
-    {
-        $dataPath = __DIR__ . '/../../../data';
+    const NUMERIC_KEY = 'currencyByNumeric';
+    const ALPHA_KEY = 'currencyByAlpha';
 
-        return new CurrencyRepository(
-            new RequireFileLoader($dataPath . 'currencyByAlpha.php'),
-            new CurrencyArrayEncoder()
-        );
+    protected $currentKeyType;
+
+    /**
+     * @param string $keyType
+     */
+    public function __construct($keyType = self::NUMERIC_KEY)
+    {
+        $this->currentKeyType = $keyType;
     }
 
-    public function createNumericRepository()
+    /**
+     * @return CurrencyRepository
+     */
+    public function __invoke()
     {
-        $dataPath = __DIR__ . '/../../../data';
+        $dataPath = __DIR__ . str_repeat(DIRECTORY_SEPARATOR . '..', 4)
+                  . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR;
 
         return new CurrencyRepository(
-            new RequireFileLoader($dataPath . 'currencyByNumeric.php'),
+            new RequireFileLoader($dataPath . $this->currentKeyType . '.php'),
             new CurrencyArrayEncoder()
         );
     }
