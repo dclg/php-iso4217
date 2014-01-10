@@ -29,6 +29,12 @@ To use this library just add `"dclg/php-iso4217": "*"` to your composer.json req
 }
 ```
 
+And then run in your project root:
+
+```
+$ composer update -o
+```
+
 Usage
 -----
 
