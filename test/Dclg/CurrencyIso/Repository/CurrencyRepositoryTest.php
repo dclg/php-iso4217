@@ -30,8 +30,13 @@ class CurrencyRepositoryTest extends \PHPUnit_Framework_TestCase
     {
         $repository = $this->getRepository();
 
-        $this->assertEquals([new Currency(840, 'USD', 'US Dollar', 2), new Currency(978, 'EUR', 'Euro', 2)], $repository->getAll());
-
+        $this->assertEquals(
+            [
+                'USD' => new Currency(840, 'USD', 'US Dollar', 2),
+                'EUR' => new Currency(978, 'EUR', 'Euro', 2)
+            ],
+            $repository->getAll()
+        );
     }
 
     /**

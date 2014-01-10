@@ -22,6 +22,11 @@ class CurrencyRepository
         $this->arrayDecoder = $arrayEncoder;
     }
 
+    /**
+     * @param int|string  $id
+     * @return \Dclg\CurrencyIso\Model\Currency
+     * @throws \Dclg\CurrencyIso\Exception\NotFoundException
+     */
     public function getById($id)
     {
         $this->checkDataIsLoaded();
@@ -33,13 +38,16 @@ class CurrencyRepository
         return $this->arrayDecoder->fromArray($this->data[$id]);
     }
 
+    /**
+     * @return \Dclg\CurrencyIso\Model\Currency[]
+     */
     public function getAll()
     {
         $this->checkDataIsLoaded();
 
         $result = [];
-        foreach($this->data as $array) {
-            $result[] = $this->arrayDecoder->fromArray($array);
+        foreach($this->data as $key => $array) {
+            $result[$key] = $this->arrayDecoder->fromArray($array);
         }
         return $result;
     }
